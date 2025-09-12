@@ -23,6 +23,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(
             value = RemoveTeamMemberSystemHookEvent.class,
             name = TeamMemberSystemHookEvent.TEAM_MEMBER_REMOVED_EVENT),
+    @JsonSubTypes.Type(
+            value = UpdateTeamMemberSystemHookEvent.class,
+            name = TeamMemberSystemHookEvent.TEAM_MEMBER_UPDATED_EVENT),
     @JsonSubTypes.Type(value = CreateUserSystemHookEvent.class, name = UserSystemHookEvent.USER_CREATE_EVENT),
     @JsonSubTypes.Type(value = DestroyUserSystemHookEvent.class, name = UserSystemHookEvent.USER_DESTROY_EVENT),
     @JsonSubTypes.Type(
@@ -40,6 +43,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(
             value = RemoveGroupMemberSystemHookEvent.class,
             name = GroupMemberSystemHookEvent.GROUP_MEMBER_REMOVED_EVENT),
+    @JsonSubTypes.Type(
+            value = UpdateGroupMemberSystemHookEvent.class,
+            name = GroupMemberSystemHookEvent.GROUP_MEMBER_UPDATE_EVENT),
     @JsonSubTypes.Type(value = PushSystemHookEvent.class, name = PushSystemHookEvent.PUSH_EVENT),
     @JsonSubTypes.Type(value = TagPushSystemHookEvent.class, name = TagPushSystemHookEvent.TAG_PUSH_EVENT),
     @JsonSubTypes.Type(
@@ -71,38 +77,82 @@ public interface SystemHookEvent extends Serializable {
 
 // All of the following class definitions are needed to make the above work.
 // Jackson has a tough time mapping the same class to multiple IDs
-class CreateProjectSystemHookEvent extends ProjectSystemHookEvent {}
+class CreateProjectSystemHookEvent extends ProjectSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class DestroyProjectSystemHookEvent extends ProjectSystemHookEvent {}
+class DestroyProjectSystemHookEvent extends ProjectSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class RenameProjectSystemHookEvent extends ProjectSystemHookEvent {}
+class RenameProjectSystemHookEvent extends ProjectSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class TransferProjectSystemHookEvent extends ProjectSystemHookEvent {}
+class TransferProjectSystemHookEvent extends ProjectSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class UpdateProjectSystemHookEvent extends ProjectSystemHookEvent {}
+class UpdateProjectSystemHookEvent extends ProjectSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class NewTeamMemberSystemHookEvent extends TeamMemberSystemHookEvent {}
+class NewTeamMemberSystemHookEvent extends TeamMemberSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class RemoveTeamMemberSystemHookEvent extends TeamMemberSystemHookEvent {}
+class RemoveTeamMemberSystemHookEvent extends TeamMemberSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class CreateUserSystemHookEvent extends UserSystemHookEvent {}
+class UpdateTeamMemberSystemHookEvent extends TeamMemberSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class DestroyUserSystemHookEvent extends UserSystemHookEvent {}
+class CreateUserSystemHookEvent extends UserSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class RenameUserSystemHookEvent extends UserSystemHookEvent {}
+class DestroyUserSystemHookEvent extends UserSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class UserFailedLoginSystemHookEvent extends UserSystemHookEvent {}
+class RenameUserSystemHookEvent extends UserSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class CreateKeySystemHookEvent extends KeySystemHookEvent {}
+class UserFailedLoginSystemHookEvent extends UserSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class DestroyKeySystemHookEvent extends KeySystemHookEvent {}
+class CreateKeySystemHookEvent extends KeySystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class CreateGroupSystemHookEvent extends GroupSystemHookEvent {}
+class DestroyKeySystemHookEvent extends KeySystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class DestroyGroupSystemHookEvent extends GroupSystemHookEvent {}
+class CreateGroupSystemHookEvent extends GroupSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class RenameGroupSystemHookEvent extends GroupSystemHookEvent {}
+class DestroyGroupSystemHookEvent extends GroupSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class NewGroupMemberSystemHookEvent extends GroupMemberSystemHookEvent {}
+class RenameGroupSystemHookEvent extends GroupSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
 
-class RemoveGroupMemberSystemHookEvent extends GroupMemberSystemHookEvent {}
+class NewGroupMemberSystemHookEvent extends GroupMemberSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
+
+class RemoveGroupMemberSystemHookEvent extends GroupMemberSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}
+
+class UpdateGroupMemberSystemHookEvent extends GroupMemberSystemHookEvent {
+    private static final long serialVersionUID = 1L;
+}

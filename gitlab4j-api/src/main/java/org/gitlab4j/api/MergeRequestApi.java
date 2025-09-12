@@ -9,7 +9,6 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
-import org.gitlab4j.api.GitLabApi.ApiVersion;
 import org.gitlab4j.api.models.AcceptMergeRequestParams;
 import org.gitlab4j.api.models.ApprovalRule;
 import org.gitlab4j.api.models.ApprovalRuleParams;
@@ -154,6 +153,52 @@ public class MergeRequestApi extends AbstractApi {
      */
     public List<MergeRequest> getMergeRequests(Object projectIdOrPath) throws GitLabApiException {
         return (getMergeRequests(projectIdOrPath, getDefaultPerPage()).all());
+    }
+
+    /**
+     * Get all merge requests for the specified project.
+     *
+     * <pre><code>GitLab Endpoint: GET /projects/:id/merge_requests</code></pre>
+     *
+     * @param projectIdOrPath the project in the form of an Long(ID), String(path), or Project instance
+     * @param filter a MergeRequestFilter instance with the filter settings
+     * @return all merge requests for the specified project matching the filter
+     * @throws GitLabApiException if any exception occurs
+     */
+    public List<MergeRequest> getMergeRequests(Object projectIdOrPath, MergeRequestFilter filter)
+            throws GitLabApiException {
+        return (getMergeRequests(projectIdOrPath, filter, getDefaultPerPage()).all());
+    }
+
+    /**
+     * Get all merge requests for the specified project.
+     *
+     * <pre><code>GitLab Endpoint: GET /projects/:id/merge_requests</code></pre>
+     *
+     * @param projectIdOrPath the project in the form of an Long(ID), String(path), or Project instance
+     * @param filter a MergeRequestFilter instance with the filter settings
+     * @param itemsPerPage the number of MergeRequest instances that will be fetched per page
+     * @return all merge requests for the specified project matching the filter
+     * @throws GitLabApiException if any exception occurs
+     */
+    public Pager<MergeRequest> getMergeRequests(Object projectIdOrPath, MergeRequestFilter filter, int itemsPerPage)
+            throws GitLabApiException {
+
+        if (filter != null && filter.getProjectId() != null) {
+            throw new RuntimeException(
+                    "projectId cannot be specified in filter, use projectIdOrPath parameter instead");
+        }
+
+        MultivaluedMap<String, String> queryParams =
+                (filter != null ? new GitLabApiForm(filter.getQueryParams()).asMap() : null);
+        return (new Pager<MergeRequest>(
+                this,
+                MergeRequest.class,
+                itemsPerPage,
+                queryParams,
+                "projects",
+                getProjectIdOrPath(projectIdOrPath),
+                "merge_requests"));
     }
 
     /**
@@ -885,10 +930,8 @@ public class MergeRequestApi extends AbstractApi {
             throw new RuntimeException("mergeRequestIid cannot be null");
         }
 
-        Response.Status expectedStatus =
-                (isApiVersion(ApiVersion.V3) ? Response.Status.OK : Response.Status.NO_CONTENT);
         delete(
-                expectedStatus,
+                Response.Status.NO_CONTENT,
                 null,
                 "projects",
                 getProjectIdOrPath(projectIdOrPath),
@@ -1023,9 +1066,7 @@ public class MergeRequestApi extends AbstractApi {
         Form formData = new GitLabApiForm()
                 .withParam("merge_commit_message", mergeCommitMessage)
                 .withParam("should_remove_source_branch", shouldRemoveSourceBranch)
-                .withParam(
-                        (isApiVersion(ApiVersion.V3) ? "merge_when_build_succeeds" : "merge_when_pipeline_succeeds"),
-                        mergeWhenPipelineSucceeds)
+                .withParam("merge_when_pipeline_succeeds", mergeWhenPipelineSucceeds)
                 .withParam("sha", sha);
 
         Response response = put(

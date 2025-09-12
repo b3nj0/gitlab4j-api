@@ -23,6 +23,7 @@ public class ImpersonationToken implements Serializable {
         WRITE_REPOSITORY,
         READ_REGISTRY,
         WRITE_REGISTRY,
+        K8S_PROXY,
         SUDO;
 
         private static JacksonJsonEnumHelper<Scope> enumHelper = new JacksonJsonEnumHelper<>(Scope.class);
@@ -49,6 +50,7 @@ public class ImpersonationToken implements Serializable {
     private Long userId;
     private Boolean revoked;
     private String name;
+    private String description;
     private Long id;
     private Date createdAt;
     private Date lastUsedAt;
@@ -103,6 +105,14 @@ public class ImpersonationToken implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getId() {

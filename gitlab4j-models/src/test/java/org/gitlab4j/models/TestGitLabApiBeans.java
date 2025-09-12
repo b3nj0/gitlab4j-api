@@ -54,6 +54,12 @@ public class TestGitLabApiBeans {
     }
 
     @Test
+    public void testAssociations() throws Exception {
+        Associations associations = unmarshalResource(Associations.class, "associations.json");
+        assertTrue(compareJson(associations, "associations.json"));
+    }
+
+    @Test
     public void testAuditEvent() throws Exception {
         List<AuditEvent> auditEvents = unmarshalResourceList(AuditEvent.class, "audit-events.json");
         assertTrue(compareJson(auditEvents, "audit-events.json"));
@@ -103,6 +109,12 @@ public class TestGitLabApiBeans {
 
         branch = unmarshalResource(Branch.class, "bad-branch.json");
         assertTrue(!Branch.isValid(branch));
+    }
+
+    @Test
+    public void testCreateRunnerResponse() throws Exception {
+        CreateRunnerResponse r = unmarshalResource(CreateRunnerResponse.class, "created-runner-response.json");
+        assertTrue(compareJson(r, "created-runner-response.json"));
     }
 
     @Test
@@ -493,6 +505,12 @@ public class TestGitLabApiBeans {
     public void testPushRule() throws Exception {
         PushRules pushRule = unmarshalResource(PushRules.class, "push-rule.json");
         assertTrue(compareJson(pushRule, "push-rule.json"));
+    }
+
+    @Test
+    public void testPullMirror() throws Exception {
+        PullMirror value = unmarshalResource(PullMirror.class, "pull-mirror.json");
+        assertTrue(compareJson(value, "pull-mirror.json"));
     }
 
     @Test
